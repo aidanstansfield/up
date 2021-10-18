@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+	flask:
+		build: .
+		depends_on:
+			- db
+			- redis
+		expose:
+			- 8000
+	db:
+		image: postgres:latest
+	redis:
+		image: 'redis:latest'
