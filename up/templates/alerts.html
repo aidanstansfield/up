@@ -1,30 +1,35 @@
 {% extends "base.html" %}
 {% set active_page = "alerts" %}
 
-
-
 {% block content %}
-<button class="button is-primary">
+<div class="section">
+
+<button class="button is-primary is-pulled-right">
 	<a href="{{ url_for('main.new_alert') }}">Create Alert</a>
 </button>
-	{% if alert %}
-  <table id="data" class="table table-striped">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Method</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for alert in alerts %}
-        <tr>
-          <td><a href="{{ url_for('main.get_alert', alert_id=alert.id) }}">{{ alert.name }}</a></td>
-          <td>{{ alert.method }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-	{% else %}
-	<h1 class="title">No alert methods yet!</h1>
-	{% endif %}
+<h3 class="title">Alerts</h3>
+</div>
+<div class="section">
+{% if alerts %}
+<table id="data" class="table is-striped is-hoverable is-fullwidth">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Method</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for alert in alerts %}
+			<tr>
+				<td><a href="{{ url_for('main.get_alert', alert_id=alert.id) }}" style="color: hsl(217, 71%, 53%)">{{ alert.name }}</a></td>
+				<td>{{ alert.method }}</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% else %}
+<h1 class="title">No alert methods yet!</h1>
+{% endif %}
+</div>
 {% endblock %}

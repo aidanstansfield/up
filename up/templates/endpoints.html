@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% set active_page = "endpoints" %}
+
+{% block content %}
+<div class="section">
+<button class="button is-primary is-pulled-right">
+	<a href="{{ url_for('main.new_endpoint') }}">Create endpoint</a>
+</button>
+<h3 class="title">Endpoints</h3>
+</div>
+<div class="section">
+{% if endpoints %}
+<table id="data" class="table is-striped is-hoverable is-fullwidth">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Method</th>
+			<th>Enabled</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for endpoint in endpoints %}
+			<tr>
+				<td><a href="{{ url_for('main.get_endpoint', endpoint_id=endpoint.id) }}" style="color: hsl(217, 71%, 53%)">{{ endpoint.name }}</a></td>
+				<td>{{ endpoint.method }}</td>
+				<td>{% if endpoint.enabled %} Yes {% else %} No {% endif %}</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% else %}
+<h1 class="title">No endpoints yet!</h1>
+{% endif %}
+</div>
+{% endblock %}

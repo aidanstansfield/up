@@ -10,7 +10,8 @@
 						(url_for('auth.login'), 'login', 'Login', 'unauthenticated'),
 						(url_for('auth.signup'), 'signup', 'Signup', 'unauthenticated'),
 						(url_for('main.get_alerts'), 'alerts', 'Alerts', 'authenticated'),
-						(url_for('auth.logout'), 'logout', 'Logout', 'authenticated'),
+						(url_for('main.get_endpoints'), 'endpoints', 'Endpoints', 'authenticated'),
+						(url_for('auth.logout'), 'logout', 'Logout', 'authenticated')
 						] -%}
 					{% set active_page = active_page|default('index') -%}
 					{% for href, id, caption, state in navigation_bar %}

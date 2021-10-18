@@ -1,11 +1,14 @@
-<!-- templates/alert.html -->
+<!-- templates/endpoint.html -->
 
 {% extends "base.html" %}
-{% set active_page = "alerts" %}
+{% set active_page = "endpoints" %}
 
 {% block content %}
 <div class="column">
-	<h3 class="title">Alert</h3>
+	<h3 class="title">Endpoint</h3>
+	{% if alerts == [] %}
+	<h3 class="subtitle">You need to add an alert method first!</h3>
+	{% else %}
 	<div class="box">
 		{% with messages = get_flashed_messages() %}
 		{% if messages %}
@@ -14,12 +17,13 @@
 			</div>
 		{% endif %}
 		{% endwith %}
-		<form method="POST" {% if alert_id %} action="{{ url_for(request.endpoint, alert_id=alert_id) }}" {% else %} action="{{ url_for(request.endpoint) }}" {% endif %}>
+		
+		<form method="POST" {% if endpoint_id %} action="{{ url_for(request.endpoint, endpoint_id=endpoint_id) }}" {% else %} action="{{ url_for(request.endpoint) }}" {% endif %}>
 			{{ form.csrf_token }}
 
 			<div class="field control form-group">
 				{{ form.name.label(class="label") }}
-				{{ form.name(placeholder='Alert Name', class="input is-large") }}
+				{{ form.name(placeholder='Endpoint Name', class="input is-large") }}
 				{% if form.name.errors %}
 					<ul class="errors">
 						{% for error in form.name.errors %}
@@ -43,11 +47,33 @@
 			</div>
 
 			<div class="field control form-group">
-				{{ form.target.label(class="label") }}
-				{{ form.target(class="input is-large") }}
-				{% if form.target.errors %}
+				{{ form.alert.label(class="label") }}
+				{{ form.alert(class="select is-large") }}
+				{% if form.alert.errors %}
 					<ul class="errors">
-						{% for error in form.target.errors %}
+						{% for error in form.alert.errors %}
+							<li class="help is-danger">{{ error }}</li>{% endfor %}
+					</ul>
+				{% endif %}
+			</div>
+
+			<div class="field control form-group">
+				{{ form.endpoint.label(class="label") }}
+				{{ form.endpoint(placeholder='https://yourdomain.com', class="input is-large") }}
+				{% if form.endpoint.errors %}
+					<ul class="errors">
+						{% for error in form.endpoint.errors %}
+							<li class="help is-danger">{{ error }}</li>{% endfor %}
+					</ul>
+				{% endif %}
+			</div>
+
+			<div class="field control form-group">
+				{{ form.enabled.label(class="label checkbox") }}
+				{{ form.enabled(class="checkbox is-large") }}
+				{% if form.enabled.errors %}
+					<ul class="errors">
+						{% for error in form.enabled.errors %}
 							<li class="help is-danger">{{ error }}</li>{% endfor %}
 					</ul>
 				{% endif %}
@@ -60,6 +86,7 @@
 			</div>
 		</form>
 	</div>
+	{% endif %}
 </div>
 
 <script>
@@ -67,10 +94,10 @@
 	let method_help = document.getElementById('method_help');
 	method_select.onchange = function() {
 		method = method_select.value;
-		if (method == 'slack') {
-			method_help.innerHTML = "Enter in the Slack Web Hook URL. If you haven't got one, head over to <a href='https://api.slack.com/incoming-webhooks' style='color: hsl(217, 71%, 53%)'>https://api.slack.com/incoming-webhooks</a> for more information."
-		} else if (method == 'email') {
-			method_help.innerHTML = "Enter in the target email address for this alert. For example, you@yourcompany.com"
+		if (method == 'http') {
+			method_help.innerHTML = "Enter in the HTTP URL to monitor."
+		} else if (method == 'https') {
+			method_help.innerHTML = "Enter in the HTTPS URL to monitor."
 		}
 	}
 </script>

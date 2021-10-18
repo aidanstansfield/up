@@ -1,6 +1,9 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectField
-from wtforms.validators import DataRequired, Email, EqualTo, Length
+from wtforms.fields.core import BooleanField
+from wtforms.validators import DataRequired, Email, EqualTo, Length, URL, AnyOf
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from flask_login import current_user
 
 class SignupForm(FlaskForm):
 	"""User Sign-up Form."""
@@ -28,6 +31,14 @@ class LoginForm(FlaskForm):
 
 class AlertForm(FlaskForm):
 	name = StringField('Name', validators=[DataRequired()])
-	method = SelectField("Method", choices=[('slack', 'Slack')], validators=[DataRequired()])
-	target = StringField('Target', validators=[DataRequired()])
+	method = SelectField("Method", choices=[(None, 'Please select a method'), ('slack', 'Slack')], validators=[DataRequired(), AnyOf(['slack'])])
+	target = StringField('Target', validators=[DataRequired(), URL()])
+	submit = SubmitField('Create alert')
+
+class EndpointForm(FlaskForm):
+	name = StringField('Name', validators=[DataRequired()])
+	method = SelectField('Method', choices=[(None, 'Please select a method'), ('http', 'HTTP'), ('https', 'HTTPS')], validators=[DataRequired(), AnyOf(['http', 'https'])])
+	endpoint = StringField('Endpoint', validators=[DataRequired(), URL()])
+	enabled = BooleanField("Enabled", validators=[DataRequired()], default="checked")
+	alert = QuerySelectField(query_factory=lambda: current_user.alerts, get_label="name")
 	submit = SubmitField('Create alert')
