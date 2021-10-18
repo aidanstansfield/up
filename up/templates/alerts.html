@@ -1,6 +1,13 @@
 {% extends "base.html" %}
+{% set active_page = "alerts" %}
+
+
 
 {% block content %}
+<button class="button is-primary">
+	<a href="{{ url_for('main.new_alert') }}">Create Alert</a>
+</button>
+	{% if alert %}
   <table id="data" class="table table-striped">
     <thead>
       <tr>
@@ -11,10 +18,13 @@
     <tbody>
       {% for alert in alerts %}
         <tr>
-          <td><a href="{{ url_for('main.get_alert', alert_id=alert.id)">{{ alert.name }}</a></td>
+          <td><a href="{{ url_for('main.get_alert', alert_id=alert.id) }}">{{ alert.name }}</a></td>
           <td>{{ alert.method }}</td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
+	{% else %}
+	<h1 class="title">No alert methods yet!</h1>
+	{% endif %}
 {% endblock %}

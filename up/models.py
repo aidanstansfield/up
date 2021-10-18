@@ -23,7 +23,7 @@ class Alert(db.Model):
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	name = db.Column(db.String(), nullable=False)	
 	method = db.Column(db.String(), nullable=False) # slack, email etc.
-	slack_url = db.Column(db.String())
+	target = db.Column(db.String()) # webhook url, email address, etc.
 	user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
 
 class Endpoint(db.Model):

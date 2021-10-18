@@ -1,0 +1,25 @@
+<!-- templates/nav.html -->
+
+<div class="hero-head">
+	<nav class="navbar">
+		<div class="container">
+			<div id="navbarMenuHeroA" class="navbar-menu">
+				<div class="navbar-end">
+					{% set navigation_bar = [
+						(url_for('main.index'), 'index', 'Home', 'both'),
+						(url_for('auth.login'), 'login', 'Login', 'unauthenticated'),
+						(url_for('auth.signup'), 'signup', 'Signup', 'unauthenticated'),
+						(url_for('main.get_alerts'), 'alerts', 'Alerts', 'authenticated'),
+						(url_for('auth.logout'), 'logout', 'Logout', 'authenticated'),
+						] -%}
+					{% set active_page = active_page|default('index') -%}
+					{% for href, id, caption, state in navigation_bar %}
+						{% if (state == 'both') or (state == 'authenticated' and current_user.is_authenticated) or (state == 'unauthenticated' and not current_user.is_authenticated) %}
+						<a href="{{ href|e }}" {% if id == active_page %} class="is-active navbar-item" {% else %} class="navbar-item" {% endif %}>{{ caption|e }}</a>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</nav>
+</div>

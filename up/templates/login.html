@@ -1,6 +1,7 @@
 <!-- templates/login.html -->
 
 {% extends "base.html" %}
+{% set active_page = "login" %}
 
 {% block content %}
 <div class="column is-4 is-offset-4">
@@ -13,58 +14,43 @@
 			</div>
 		{% endif %}
 		{% endwith %}
-		<form method="POST" action="/login">
-			<!-- <div class="field">
-				<div class="control">
-					<input class="input is-large" type="email" name="email" placeholder="Your Email" autofocus="">
-				</div>
-			</div>
-
-			<div class="field">
-				<div class="control">
-					<input class="input is-large" type="password" name="password" placeholder="Your Password">
-				</div>
-			</div>
-			<div class="field">
-				<label class="checkbox">
-					<input type="checkbox">
-					Remember me
-				</label>
-			</div>
-			<button class="button is-block is-info is-large is-fullwidth">Login</button> -->
+		<form method="POST" action="{{ url_for('auth.login', next=request.args.get('next')) }}">
 			{{ form.csrf_token }}
 
-			<fieldset class="email">
-				{{ form.email.label }}
-				{{ form.email(placeholder='youremail@example.com') }}
+			<div class="field control form-group">
+				{{ form.email.label(class="label") }}
+				{{ form.email(placeholder='youremail@example.com', class="input is-large") }}
 				{% if form.email.errors %}
 					<ul class="errors">
 						{% for error in form.email.errors %}
-							<li>{{ error }}</li>{% endfor %}
+							<li class="help is-danger">{{ error }}</li>{% endfor %}
 					</ul>
 				{% endif %}
-			</fieldset>
+			</div>
 
-			<fieldset class="password">
-				{{ form.password.label }}
-				{{ form.password }}
-				{% if form.email.errors %}
+			<div class="field control form-group">
+				{{ form.password.label(class="label") }}
+				{{ form.password(class="input is-large") }}
+				{% if form.password.errors %}
 					<ul class="errors">
 						{% for error in form.password.errors %}
-							<li>{{ error }}</li>{% endfor %}
+							<li class="help is-danger">{{ error }}</li>{% endfor %}
 					</ul>
 				{% endif %}
-			</fieldset>
+			</div>
 
-			<div class="submit-button">
-				{{ form.submit }}
+			<div class="field control form-group">
+				<div class="submit-button">
+					{{ form.submit(class="button is-block is-info is-large is-fullwidth") }}
+				</div>
 			</div>
 
 			<div class="login-signup">
-				<span>Don't have an account?</span>
-				<a href="{{ url_for('auth_bp.signup') }}">Sign up.</a>
+				<div>
+					<span>Don't have an account?</span>
+					<b><a href="{{ url_for('auth.signup') }}" style="color: hsl(217, 71%, 53%)">Signup.</a></b>
+				</div>
 			</div>
-		</form>
 	</div>
 </div>
 {% endblock %}

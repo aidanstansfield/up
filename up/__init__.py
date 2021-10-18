@@ -4,10 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager 
 from os import environ
 from config import config
-from celery_utils import make_celery
+from .celery_utils import make_celery
 
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
+login_manager = LoginManager()
 ext_celery = FlaskCeleryExt(create_celery_app=make_celery)
 
 def create_app(config_name=None):
@@ -16,7 +17,7 @@ def create_app(config_name=None):
 
 	# Flask app config
 	if config_name is None:
-			config_name = environ.get("FLASK_CONFIG", "development")
+		config_name = environ.get("FLASK_CONFIG", "development")
 	
 	app.config.from_object(config[config_name])
 
@@ -24,18 +25,10 @@ def create_app(config_name=None):
 	db.init_app(app)
 	ext_celery.init_app(app)
 
-	login_manager = LoginManager()
 	login_manager.login_view = 'auth.login'
 	login_manager.init_app(app)
 
 	with app.app_context():
-		from .models import User
-
-		@login_manager.user_loader
-		def load_user(user_id):
-			# since the user_id is just the primary key of our user table, use it in the query for the user
-			return User.query.get(int(user_id))
-
 		# blueprint for auth routes in our app
 		from .auth import auth as auth_blueprint
 		app.register_blueprint(auth_blueprint)
