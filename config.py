@@ -3,22 +3,26 @@
 from os import environ
 from dotenv import load_dotenv, find_dotenv
 
-class Config:
-	if find_dotenv() == '':
-		# could not find a dotenv file, use development defaults
-		# NOTE: These are dev defaults, these creds/keys are not used in prod
+class BaseConfig:
+	# SQLAlchemy
+	SQLALCHEMY_TRACK_MODIFICATIONS = False
+	SQLALCHEMY_DATABASE_URI = environ.get("DATABASE_URL", "sqlite:///dev.db")
 
-		# General
-		SECRET_KEY = b'pf\x95\x11\x95s\x9c\xcd>\x8bgj\xd3\x15f\x08' # os.urandom(16)
-		FLASK_ENV = environ.get("FLASK_ENV", "development")
+	# Celery
+	CELERY_BROKER_URL = environ.get("CELERY_BROKER_URL", "redis://redis:6379/0")
+	CELERY_RESULT_BACKEND = environ.get("CELERY_RESULT_BACKEND", "redis://redis:6379/0")
 
-		# Database
-		SQLALCHEMY_DATABASE_URI = environ.get("DATABASE_URL", "sqlite:///dev.db") # 'sqlite:///dev.db'
-		SQLALCHEMY_TRACK_MODIFICATIONS = False
-	else:
-		load_dotenv()
+class DevelopmentConfig(BaseConfig):
+	FLASK_ENV = "development"
+	SECRET_KEY = b'pf\x95\x11\x95s\x9c\xcd>\x8bgj\xd3\x15f\x08'
+	DEBUG = True
+
+class ProductionConfig(BaseConfig):
+		if find_dotenv != '': load_dotenv()
 		SECRET_KEY = environ.get("SECRET_KEY")
 		FLASK_ENV = 'production'
-		# Database
-		SQLALCHEMY_DATABASE_URI = environ.get("SQLALCHEMY_DATABASE_URI")
-		SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+config = {
+    "development": DevelopmentConfig,
+    "production": ProductionConfig,
+}

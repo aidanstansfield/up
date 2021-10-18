@@ -14,7 +14,57 @@
 		{% endif %}
 		{% endwith %}
 		<form method="POST" action="/signup">
-			<div class="field">
+			{{ form.csrf_token }}
+
+			<fieldset class="name">
+				{{ form.name.label }}
+				{{ form.name(placeholder='Your Name') }}
+				{% if form.name.errors %}
+					<ul class="errors">
+						{% for error in form.email.errors %}
+							<li>{{ error }}</li>{% endfor %}
+					</ul>
+				{% endif %}
+			</fieldset>
+
+			<fieldset class="email">
+				{{ form.email.label }}
+				{{ form.email(placeholder='youremail@example.com') }}
+				{% if form.email.errors %}
+					<ul class="errors">
+						{% for error in form.email.errors %}
+							<li>{{ error }}</li>{% endfor %}
+					</ul>
+				{% endif %}
+			</fieldset>
+
+			<fieldset class="password">
+				{{ form.password.label }}
+				{{ form.password }}
+				{% if form.password.errors %}
+					<ul class="errors">
+						{% for error in form.password.errors %}
+							<li>{{ error }}</li>{% endfor %}
+					</ul>
+				{% endif %}
+			</fieldset>
+
+			<fieldset class="confirm">
+				{{ form.confirm.label }}
+				{{ form.confirm }}
+				{% if form.confirm.errors %}
+					<ul class="errors">
+						{% for error in form.confirm.errors %}
+							<li>{{ error }}</li>{% endfor %}
+					</ul>
+				{% endif %}
+			</fieldset>
+
+			<div class="submit-button">
+				{{ form.submit }}
+			</div>
+
+			<!-- <div class="field">
 				<div class="control">
 					<input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
 				</div>
@@ -32,8 +82,14 @@
 				</div>
 			</div>
 
-			<button class="button is-block is-info is-large is-fullwidth">Sign Up</button>
+			<button class="button is-block is-info is-large is-fullwidth">Sign Up</button> -->
 		</form>
+		<div class="login-signup">
+			<div>
+				<span>Already have an account?</span>
+				<a href="{{ url_for('auth_bp.login') }}">Log in.</a>
+			</div>
+		</div>
 	</div>
 </div>
 {% endblock %}

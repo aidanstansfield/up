@@ -1,20 +1,20 @@
 # developer docker compose file, extends docker-compose.yml
 version: '3.9'
 services:
-	flask:
-		ports:
-			- 8000:5000
-		volumes:
-			- './:/app'
-		env_file: 
-			- ./.env.dev
-	db:
-		environment:
-			POSTGRES_PASSWORD: DevPassword
-			POSTGRES_USER: DevUser
-			POSTGRES_DB: DevDB
-		volumes:
-			- postgres_data:/var/lib/postgresql/data
+  flask:
+    ports:
+      - 8000:5000
+    volumes:
+      - './:/app'
+    env_file: 
+      - ./.env.dev
+  db:
+    environment:
+      POSTGRES_PASSWORD: DevPassword
+      POSTGRES_USER: DevUser
+      POSTGRES_DB: DevDB
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
-	postgres_data:
+  postgres_data:
