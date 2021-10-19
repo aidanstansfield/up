@@ -10,6 +10,8 @@ COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
 COPY config.py wsgi.py ./
-COPY up ./up 
+COPY up ./up
+COPY entrypoint start.sh /
+RUN chmod +x /entrypoint /start.sh
 
-CMD flask run --host=0.0.0.0
+ENTRYPOINT ["/entrypoint"]

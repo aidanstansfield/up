@@ -3,7 +3,7 @@ version: '3.9'
 services:
   flask:
     ports:
-      - 8000:5000
+      - 80:5000
     volumes:
       - './:/app'
     env_file: 
@@ -15,6 +15,23 @@ services:
       POSTGRES_DB: DevDB
     volumes:
       - postgres_data:/var/lib/postgresql/data
+  celery_worker:
+    volumes:
+      - './:/app'
+    env_file: 
+      - ./.env.dev
+  celery_beat:
+    volumes:
+      - './:/app'
+    env_file: 
+      - ./.env.dev
+  celery_flower:
+    ports:
+      - 5555:5555
+    volumes:
+      - './:/app'
+    env_file: 
+      - ./.env.dev
 
 volumes:
   postgres_data:

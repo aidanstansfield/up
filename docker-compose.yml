@@ -2,6 +2,8 @@ version: '3.9'
 services:
   flask:
     build: .
+    image: up-flask
+    command: /start.sh flask
     depends_on:
       - db
       - redis
@@ -10,4 +12,27 @@ services:
   db:
     image: postgres:latest
   redis:
-    image: 'redis:latest'
+    image: redis:latest
+  celery_worker:
+    build: .
+    image: up-celery-worker
+    command: /start.sh worker
+    depends_on:
+      - db
+      - redis
+  celery_beat:
+    build: .
+    image: up-celery-beat
+    command: /start.sh beat
+    depends_on:
+      - db
+      - redis
+  celery_flower:
+    build: .
+    image: up-celery-flower
+    command: /start.sh flower
+    expose:
+      - 5555
+    depends_on:
+      - db
+      - redis

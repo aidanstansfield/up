@@ -3,7 +3,15 @@
 <div class="hero-head">
 	<nav class="navbar">
 		<div class="container">
+			<div class="navbar-brand">
+				<h1 class="title"><a href="{{ url_for('main.index') }}">Up</a></h3>
+			</div>
 			<div id="navbarMenuHeroA" class="navbar-menu">
+				{% if heading %}
+				<div class="navbar-start is-justify-content-center is-flex-grow-1">
+					<h3 class="title">{{ heading }}</h3>
+				</div>
+				{% endif %}
 				<div class="navbar-end">
 					{% set navigation_bar = [
 						(url_for('main.index'), 'index', 'Home', 'both'),

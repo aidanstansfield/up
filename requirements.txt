@@ -8,3 +8,5 @@ python-dotenv
 psycopg2-binary
 requests
 email_validator
+redis
+flower
