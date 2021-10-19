@@ -21,67 +21,120 @@
 		<form method="POST" {% if endpoint_id %} action="{{ url_for(request.endpoint, endpoint_id=endpoint_id) }}" {% else %} action="{{ url_for(request.endpoint) }}" {% endif %}>
 			{{ form.csrf_token }}
 
-			<div class="field control form-group">
-				{{ form.name.label(class="label") }}
-				{{ form.name(placeholder='Endpoint Name', class="input is-large") }}
-				{% if form.name.errors %}
-					<ul class="errors">
-						{% for error in form.name.errors %}
-							<li class="help is-danger">{{ error }}</li>{% endfor %}
-					</ul>
-				{% endif %}
+			<div class="field is-horizontal">
+				<div class="field-label is-normal">
+					{{ form.name.label(class="label") }}
+				</div>
+				<div class="field-body">
+					<div class="field">
+						<div class="control">
+							{{ form.name(placeholder='Endpoint Name', class="input is-normal") }}
+							{% if form.name.errors %}
+								<ul class="errors">
+									{% for error in form.name.errors %}
+										<li class="help is-danger is-size-6">{{ error }}</li>{% endfor %}
+								</ul>
+							{% endif %}
+						</div>
+					</div>
+				</div>
 			</div>
 
-			<div class="field control form-group">
-				{{ form.method.label(class="label") }}
-				{{ form.method(class="select is-large") }}
-				<ul>
-					<li id="method_help" class="help"></li>
-				</ul>
-				{% if form.method.errors %}
-					<ul class="errors">
-						{% for error in form.method.errors %}
-							<li class="help is-danger">{{ error }}</li>{% endfor %}
-					</ul>
-				{% endif %}
+			<div class="field is-horizontal">
+				<div class="field-label is-normal">
+					{{ form.method.label(class="label") }}
+				</div>
+				<div class="field-body">
+					<div class="field is-narrow">
+						<div class="control">
+							<div class="select is-fullwidth is-normal">
+								{{ form.method() }}
+							</div>
+							{% if form.method.errors %}
+								<ul class="errors">
+									{% for error in form.method.errors %}
+										<li class="help is-danger is-size-6">{{ error }}</li>{% endfor %}
+								</ul>
+							{% endif %}
+						</div>
+					</div>
+				</div>
 			</div>
 
-			<div class="field control form-group">
-				{{ form.alert.label(class="label") }}
-				{{ form.alert(class="select is-large") }}
-				{% if form.alert.errors %}
-					<ul class="errors">
-						{% for error in form.alert.errors %}
-							<li class="help is-danger">{{ error }}</li>{% endfor %}
-					</ul>
-				{% endif %}
+			<div class="field is-horizontal">
+				<div class="field-label is-normal">
+					{{ form.alert.label(class="label") }}
+				</div>
+				<div class="field-body">
+					<div class="field is-narrow">
+						<div class="control">
+							<div class="select is-fullwidth is-normal">
+								{{ form.alert() }}
+							</div>
+							{% if form.alert.errors %}
+								<ul class="errors">
+									{% for error in form.alert.errors %}
+										<li class="help is-danger is-size-6">{{ error }}</li>{% endfor %}
+								</ul>
+							{% endif %}
+						</div>
+					</div>
+				</div>
 			</div>
 
-			<div class="field control form-group">
-				{{ form.endpoint.label(class="label") }}
-				{{ form.endpoint(placeholder='https://yourdomain.com', class="input is-large") }}
-				{% if form.endpoint.errors %}
-					<ul class="errors">
-						{% for error in form.endpoint.errors %}
-							<li class="help is-danger">{{ error }}</li>{% endfor %}
-					</ul>
-				{% endif %}
+			<div class="field is-horizontal">
+				<div class="field-label is-normal">
+					{{ form.endpoint.label(class="label") }}
+				</div>
+				<div class="field-body">
+					<div class="field">
+						<div class="control">
+							{{ form.endpoint(placeholder='https://yourdomain.com', class="input is-normal") }}
+							<ul>
+								<li id="method_help" class="help is-size-6"></li>
+							</ul>
+							{% if form.endpoint.errors %}
+								<ul class="errors">
+									{% for error in form.endpoint.errors %}
+										<li class="help is-danger is-size-6">{{ error }}</li>{% endfor %}
+								</ul>
+							{% endif %}
+						</div>
+					</div>
+				</div>
 			</div>
 
-			<div class="field control form-group">
-				{{ form.enabled.label(class="label checkbox") }}
-				{{ form.enabled(class="checkbox is-large") }}
-				{% if form.enabled.errors %}
-					<ul class="errors">
-						{% for error in form.enabled.errors %}
-							<li class="help is-danger">{{ error }}</li>{% endfor %}
-					</ul>
-				{% endif %}
+			<div class="field is-horizontal">
+				<div class="field-label is-normal">
+					{{ form.enabled.label(class="label checkbox") }}
+				</div>
+				<div class="field-body">
+					<div class="field is-narrow">
+						<div class="control">
+							<label class="checkbox is-normal">
+								{{ form.enabled() }}
+							</label>
+							{% if form.enabled.errors %}
+								<ul class="errors">
+									{% for error in form.enabled.errors %}
+										<li class="help is-danger">{{ error }}</li>{% endfor %}
+								</ul>
+							{% endif %}
+						</div>
+					</div>
+				</div>
 			</div>
 
-			<div class="field control form-group">
-				<div class="submit-button">
-					{{ form.submit(class="button is-block is-info is-large is-fullwidth") }}
+			<div class="field is-horizontal">
+				<div class="field-label">
+					<!-- Left empty for spacing -->
+				</div>
+				<div class="field-body">
+					<div class="field is-narrow">
+						<div class="control">
+							{{ form.submit(class="button is-primary is-normal") }}
+						</div>
+					</div>
 				</div>
 			</div>
 		</form>

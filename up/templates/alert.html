@@ -17,45 +17,78 @@
 		<form method="POST" {% if alert_id %} action="{{ url_for(request.endpoint, alert_id=alert_id) }}" {% else %} action="{{ url_for(request.endpoint) }}" {% endif %}>
 			{{ form.csrf_token }}
 
-			<div class="field control form-group">
-				{{ form.name.label(class="label") }}
-				{{ form.name(placeholder='Alert Name', class="input is-large") }}
-				{% if form.name.errors %}
-					<ul class="errors">
-						{% for error in form.name.errors %}
-							<li class="help is-danger">{{ error }}</li>{% endfor %}
-					</ul>
-				{% endif %}
+			<div class="field is-horizontal">
+				<div class="field-label is-normal">
+					{{ form.name.label(class="label") }}
+				</div>
+				<div class="field-body">
+					<div class="field">
+						<div class="control">
+							{{ form.name(placeholder='Alert Name', class="input is-normal") }}
+							{% if form.name.errors %}
+								<ul class="errors">
+									{% for error in form.name.errors %}
+										<li class="help is-danger is-size-6">{{ error }}</li>{% endfor %}
+								</ul>
+							{% endif %}
+						</div>
+					</div>
+				</div>
 			</div>
 
-			<div class="field control form-group">
-				{{ form.method.label(class="label") }}
-				{{ form.method(class="select is-large") }}
-				<ul>
-					<li id="method_help" class="help"></li>
-				</ul>
-				{% if form.method.errors %}
-					<ul class="errors">
-						{% for error in form.method.errors %}
-							<li class="help is-danger">{{ error }}</li>{% endfor %}
-					</ul>
-				{% endif %}
+			<div class="field is-horizontal">
+				<div class="field-label is-normal">
+					{{ form.method.label(class="label") }}
+				</div>
+				<div class="field-body">
+					<div class="field is-narrow">
+						<div class="control">
+							<div class="select is-fullwidth is-normal">
+								{{ form.method() }}
+							</div>
+							{% if form.method.errors %}
+								<ul class="errors">
+									{% for error in form.method.errors %}
+										<li class="help is-danger is-size-6">{{ error }}</li>{% endfor %}
+								</ul>
+							{% endif %}
+						</div>
+					</div>
+				</div>
 			</div>
 
-			<div class="field control form-group">
-				{{ form.target.label(class="label") }}
-				{{ form.target(class="input is-large") }}
-				{% if form.target.errors %}
-					<ul class="errors">
-						{% for error in form.target.errors %}
-							<li class="help is-danger">{{ error }}</li>{% endfor %}
-					</ul>
-				{% endif %}
+			<div class="field is-horizontal">
+				<div class="field-label is-normal">
+					{{ form.target.label(class="label") }}
+				</div>
+				<div class="field-body">
+					<div class="field">
+						<div class="control">
+							{{ form.target(placeholder='https://hooks.slack.com/token', class="input is-normal") }}
+							<ul>
+								<li id="method_help" class="help is-size-6"></li>
+							</ul>
+							{% if form.target.errors %}
+								<ul class="errors">
+									{% for error in form.target.errors %}
+										<li class="help is-danger is-size-6">{{ error }}</li>{% endfor %}
+								</ul>
+							{% endif %}
+						</div>
+					</div>
+				</div>
 			</div>
 
-			<div class="field control form-group">
-				<div class="submit-button">
-					{{ form.submit(class="button is-block is-info is-large is-fullwidth") }}
+			<div class="field is-horizontal">
+				<div class="field-label">
+					<!-- Left empty for spacing -->
+				</div>
+				<div class="field-body">
+					<div class="field is-narrow">
+						<div class="control">
+							{{ form.submit(class="button is-primary is-normal") }}
+						</div>
+					</div>
 				</div>
 			</div>
 		</form>

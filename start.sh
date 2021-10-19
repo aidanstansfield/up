@@ -18,9 +18,7 @@ else
 			flask run --host=0.0.0.0
 			;;
 		beat)
-			rm -f './celerybeat.pid'
-			rm -f './celerybeat-schedule'
-			celery -A wsgi.celery beat -l info
+			celery -A wsgi.celery beat -l info -s /celerybeat-schedule.db --pidfile /celerybeat.pid
 			;;
 		worker)
 			celery -A wsgi.celery worker -l info

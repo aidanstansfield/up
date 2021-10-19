@@ -20,6 +20,7 @@ services:
     depends_on:
       - db
       - redis
+      - flask
   celery_beat:
     build: .
     image: up-celery-beat
@@ -27,6 +28,7 @@ services:
     depends_on:
       - db
       - redis
+      - flask
   celery_flower:
     build: .
     image: up-celery-flower
@@ -36,3 +38,4 @@ services:
     depends_on:
       - db
       - redis
+      - flask

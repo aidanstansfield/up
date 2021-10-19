@@ -6,6 +6,8 @@ from . import db
 from sqlalchemy.sql import func
 
 class User(UserMixin, db.Model):
+	__tablename__ = 'users'
+
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	email = db.Column(db.String(321), unique=True)
 	password = db.Column(db.String(100))
@@ -25,6 +27,7 @@ class Alert(db.Model):
 	method = db.Column(db.String(), nullable=False) # slack, email etc.
 	target = db.Column(db.String()) # webhook url, email address, etc.
 	user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
+	endpoints = db.relationship('Endpoint', backref='alert', lazy=True)
 
 class Endpoint(db.Model):
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -34,9 +37,10 @@ class Endpoint(db.Model):
 	enabled = db.Column(db.Boolean, nullable=False, default=True)
 	user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
 	alert_id = db.Column(db.Integer, db.ForeignKey(Alert.id), nullable=False)
+	available = db.Column(db.Boolean, default=True)
 
 class Available(db.Model):
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	timestamp = db.Column(db.Time, nullable=False, default=func.now())
-	available = db.Column(db.Boolean)
+	available = db.Column(db.Boolean, default=True)
 	endpoint_id = db.Column(db.Integer, db.ForeignKey(Endpoint.id), nullable=False)

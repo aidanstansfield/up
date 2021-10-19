@@ -39,13 +39,7 @@ def create_app(config_name=None):
 
 		db.create_all()
 
+		# tasks
 		from . import tasks
-
-		ext_celery.celery.conf.beat_schedule = {
-			'Check enabled endpoints': {
-				'task': 'up.tasks.check_enabled',
-				'schedule': 10.0
-			},
-		}
-
+		
 		return app

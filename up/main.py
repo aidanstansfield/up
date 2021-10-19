@@ -21,7 +21,7 @@ def profile():
 @login_required
 def get_alerts():
 	alerts = current_user.alerts
-	return render_template('alerts.html', alerts=alerts, heading='Alerts')
+	return render_template('alerts.html', alerts=alerts)
 
 @main.route('/alerts/<int:alert_id>', methods=['GET', 'POST'])
 @login_required
@@ -54,7 +54,7 @@ def new_alert():
 @login_required
 def get_endpoints():
 	endpoints = current_user.endpoints
-	return render_template('endpoints.html', endpoints=endpoints, heading='Endpoints')
+	return render_template('endpoints.html', endpoints=endpoints)
 
 @main.route('/endpoints/<int:endpoint_id>', methods=['GET', 'POST'])
 @login_required

@@ -17,40 +17,64 @@
 		<form method="POST" action="{{ url_for('auth.login', next=request.args.get('next')) }}">
 			{{ form.csrf_token }}
 
-			<div class="field control form-group">
-				{{ form.email.label(class="label") }}
-				{{ form.email(placeholder='youremail@example.com', class="input is-large") }}
-				{% if form.email.errors %}
-					<ul class="errors">
-						{% for error in form.email.errors %}
-							<li class="help is-danger">{{ error }}</li>{% endfor %}
-					</ul>
-				{% endif %}
-			</div>
-
-			<div class="field control form-group">
-				{{ form.password.label(class="label") }}
-				{{ form.password(class="input is-large") }}
-				{% if form.password.errors %}
-					<ul class="errors">
-						{% for error in form.password.errors %}
-							<li class="help is-danger">{{ error }}</li>{% endfor %}
-					</ul>
-				{% endif %}
-			</div>
-
-			<div class="field control form-group">
-				<div class="submit-button">
-					{{ form.submit(class="button is-block is-info is-large is-fullwidth") }}
+			<div class="field is-horizontal">
+				<div class="field-label is-normal">
+					{{ form.email.label(class="label") }}
+				</div>
+				<div class="field-body">
+					<div class="field">
+						<div class="control">
+							{{ form.email(placeholder='youremail@example.com', class="input is-normal") }}
+							{% if form.email.errors %}
+								<ul class="errors">
+									{% for error in form.email.errors %}
+										<li class="help is-danger is-size-6">{{ error }}</li>{% endfor %}
+								</ul>
+							{% endif %}
+						</div>
+					</div>
 				</div>
 			</div>
 
-			<div class="login-signup">
-				<div>
-					<span>Don't have an account?</span>
-					<b><a href="{{ url_for('auth.signup') }}" style="color: hsl(217, 71%, 53%)">Signup.</a></b>
+			<div class="field is-horizontal">
+				<div class="field-label is-normal">
+					{{ form.password.label(class="label") }}
+				</div>
+				<div class="field-body">
+					<div class="field">
+						<div class="control">
+							{{ form.password(class="input is-normal") }}
+							{% if form.password.errors %}
+								<ul class="errors">
+									{% for error in form.password.errors %}
+										<li class="help is-danger is-size-6">{{ error }}</li>{% endfor %}
+								</ul>
+							{% endif %}
+						</div>
+					</div>
 				</div>
 			</div>
+
+			<div class="field is-horizontal">
+				<div class="field-label">
+					<!-- Left empty for spacing -->
+				</div>
+				<div class="field-body">
+					<div class="field is-narrow">
+						<div class="control">
+							{{ form.submit(class="button is-primary is-normal") }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+
+		<div class="login-signup">
+			<div>
+				<span>Don't have an account?</span>
+				<b><a href="{{ url_for('auth.signup') }}" style="color: hsl(217, 71%, 53%)">Signup.</a></b>
+			</div>
+		</div>
 	</div>
 </div>
 {% endblock %}
