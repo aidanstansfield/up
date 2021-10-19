@@ -56,8 +56,6 @@ def process_result(result):
 	av = Available(endpoint_id=endpoint_id, available=available)
 	db.session.add(av)
 	endpoint = Endpoint.query.filter_by(id=endpoint_id).first()
-	print(f"{endpoint.alert.id=}")
-	print(f"{available=}")
 	if available and not endpoint.available:
 		send_alert.delay(endpoint.alert.id, f"{endpoint.name} is UP")
 		endpoint.available = available
@@ -68,7 +66,6 @@ def process_result(result):
 
 @shared_task
 def send_alert(alert_id, alert_text):
-	print(f"{alert_id=}")
 	alert = Alert.query.filter_by(id=alert_id).first()
 	if alert.method == "slack":
 		requests.post(alert.target, json={'text': alert_text})
